@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>EGY Animal ID — تجربة بصمة الأنف</title>
+  <meta name="description" content="نموذج تجريبي للتعرف على الكلاب ببصمة الأنف عبر كاميرا الهاتف">
+  <meta name="theme-color" content="#17445c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="بصمة الأنف">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <!-- Engine loading banner -->
+  <div id="engine" class="engine" role="status">
+    <div class="engine-bar"><span id="engine-fill"></span></div>
+    <span id="engine-text">جاري تحميل محرك التعرف…</span>
+  </div>
+
+  <header class="topbar">
+    <button class="icon-btn" id="btn-back" aria-label="رجوع" hidden>
+      <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M16 5c-6.6 0-12 4.3-12 10.3 0 5.4 3.6 9.7 8.4 10.9.9.2 1.6-.6 1.6-1.5v-2.1c0-.9-.6-1.6-1.4-1.9-1.6-.6-2.6-1.8-2.6-3.3 0-2.1 2-3.6 4.2-2.6.6.3 1.1.3 1.6 0 2.2-1 4.2.5 4.2 2.6 0 1.5-1 2.7-2.6 3.3-.8.3-1.4 1-1.4 1.9v2.1c0 .9.7 1.7 1.6 1.5 4.8-1.2 8.4-5.5 8.4-10.9C28 9.3 22.6 5 16 5z"/></svg>
+      </span>
+      <div>
+        <div class="brand-name">EGY ANIMAL ID</div>
+        <div class="brand-sub" id="screen-title">تجربة بصمة الأنف</div>
+      </div>
+    </div>
+    <button class="icon-btn" id="btn-help" aria-label="طريقة الاختبار">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg>
+    </button>
+  </header>
+
+  <main id="main">
+    <!-- HOME -->
+    <section class="screen" id="s-home">
+      <div class="hero">
+        <p class="eyebrow">نموذج تجريبي · Proof of Concept</p>
+        <h1>هل تكفي كاميرا الهاتف<br>للتعرف على الكلب ببصمة أنفه؟</h1>
+        <p class="lead">سجّل 10 كلاب، ثم صوّر أنف أي كلب ودع التطبيق يتعرف عليه ويعرض ملفه.</p>
+      </div>
+
+      <div class="actions">
+        <button class="action primary" data-go="register">
+          <span class="action-ico"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span><b>تسجيل كلب جديد</b><small>بيانات الكلب + 3 صور للأنف</small></span>
+        </button>
+        <button class="action accent" data-go="identify">
+          <span class="action-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span>
+          <span><b>تعرّف على كلب</b><small>صورة واحدة للأنف تكفي</small></span>
+        </button>
+      </div>
+
+      <div class="stats">
+        <button class="stat" data-go="dogs"><b id="st-dogs">0</b><span>كلب مسجل</span><i id="st-dogs-goal">الهدف 10</i></button>
+        <button class="stat" data-go="results"><b id="st-tests">0</b><span>محاولة تعرف</span><i id="st-acc">—</i></button>
+      </div>
+
+      <button class="link-card" data-go="help">
+        <span class="lc-ico"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg></span>
+        <span><b>طريقة الاختبار الصحيحة</b><small>اقرأها قبل البدء — 2 دقيقة</small></span>
+        <svg class="chev" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+    </section>
+
+    <!-- REGISTER: profile form -->
+    <section class="screen" id="s-register" hidden>
+      <form id="reg-form" class="card form" autocomplete="off">
+        <div class="photo-pick">
+          <label class="photo-slot" for="reg-photo">
+            <img id="reg-photo-preview" alt="" hidden>
+            <span id="reg-photo-empty"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>صورة الكلب</span>
+          </label>
+          <input type="file" id="reg-photo" accept="image/*" capture="environment" hidden>
+          <p class="hint">صورة لوجه الكلب أو جسمه — للعرض في الملف فقط.</p>
+        </div>
+
+        <label class="field"><span>اسم الكلب <em>*</em></span><input name="name" required maxlength="40" placeholder="مثال: رعد"></label>
+        <div class="row">
+          <label class="field"><span>السلالة</span><input name="breed" maxlength="40" placeholder="جيرمن شيبرد"></label>
+          <label class="field"><span>الجنس</span>
+            <select name="sex"><option value="">—</option><option>ذكر</option><option>أنثى</option></select>
+          </label>
+        </div>
+        <div class="row">
+          <label class="field"><span>العمر</span><input name="age" maxlength="20" placeholder="3 سنوات"></label>
+          <label class="field"><span>اللون</span><input name="color" maxlength="30" placeholder="أسود وبني"></label>
+        </div>
+        <div class="row">
+          <label class="field"><span>الأب</span><input name="father" maxlength="40" placeholder="اسم الأب"></label>
+          <label class="field"><span>الأم</span><input name="mother" maxlength="40" placeholder="اسم الأم"></label>
+        </div>
+        <label class="field"><span>المالك</span><input name="owner" maxlength="60" placeholder="الاسم أو رقم الهاتف"></label>
+        <div class="row">
+          <label class="field"><span>التطعيم</span>
+            <select name="vaccinated"><option value="">غير معروف</option><option value="yes">مطعّم</option><option value="no">غير مطعّم</option></select>
+          </label>
+          <label class="field"><span>تاريخ آخر تطعيم</span><input type="date" name="vaccineDate"></label>
+        </div>
+        <label class="field"><span>ملاحظات</span><textarea name="notes" rows="2" maxlength="200" placeholder="رقم الشريحة، الجهة البيطرية…"></textarea></label>
+
+        <button class="btn primary block" type="submit">
+          التالي: تصوير الأنف
+          <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- REGISTER: nose captures -->
+    <section class="screen" id="s-enroll" hidden>
+      <div class="card">
+        <h2 class="card-title">بصمة أنف <span id="enroll-name"></span></h2>
+        <p class="muted">نحتاج <b>3 صور</b> للأنف. حرّك الهاتف قليلاً بين كل صورة (زاوية أو مسافة مختلفة) لتكون البصمة أقوى.</p>
+        <div class="nose-slots" id="enroll-slots"></div>
+        <p class="status" id="enroll-status"></p>
+        <button class="btn primary block" id="enroll-capture">
+          <svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          <span id="enroll-capture-label">تصوير الأنف 1 من 3</span>
+        </button>
+        <button class="btn ghost block" id="enroll-save" hidden>حفظ الكلب</button>
+      </div>
+    </section>
+
+    <!-- IDENTIFY: result -->
+    <section class="screen" id="s-result" hidden>
+      <div id="result-body"></div>
+    </section>
+
+    <!-- DOGS list -->
+    <section class="screen" id="s-dogs" hidden>
+      <div class="list-head">
+        <h2>الكلاب المسجلة</h2>
+        <button class="btn small primary" data-go="register">+ تسجيل</button>
+      </div>
+      <div class="dog-grid" id="dog-grid"></div>
+      <div class="card subtle">
+        <h3>نقل البيانات لهاتف آخر</h3>
+        <p class="muted">للاختبار بهاتف مختلف: صدّر الكلاب المسجلة وأرسل الملف عبر واتساب، ثم استورده في الهاتف الآخر.</p>
+        <div class="row">
+          <button class="btn ghost" id="btn-export">تصدير الملف</button>
+          <label class="btn ghost" for="import-file">استيراد ملف</label>
+          <input type="file" id="import-file" accept="application/json,.json" hidden>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOG profile -->
+    <section class="screen" id="s-dog" hidden>
+      <div id="dog-body"></div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="screen" id="s-results" hidden>
+      <div id="results-body"></div>
+    </section>
+
+    <!-- HELP -->
+    <section class="screen" id="s-help" hidden>
+      <article class="card prose">
+        <h2>طريقة الاختبار الصحيحة</h2>
+        <p>الهدف أن نثبت أن الكاميرا تتعرف على <b>الكلب نفسه</b> (وليس السلالة فقط)، وأنها <b>لا تخلط</b> بين كلبين.</p>
+
+        <h3>1. التسجيل (اليوم الأول)</h3>
+        <ol>
+          <li>سجّل <b>10 كلاب</b> مختلفة، ويفضّل أن يكون بينها كلبان أو أكثر من نفس السلالة واللون.</li>
+          <li>لكل كلب 3 صور للأنف، مع تحريك الهاتف قليلاً بين كل صورة.</li>
+        </ol>
+
+        <h3>2. الاختبار (يوم آخر)</h3>
+        <ol>
+          <li>صوّر أنف كل كلب من العشرة مرة أو مرتين، ويفضّل في <b>إضاءة مختلفة</b> أو بيد <b>شخص آخر</b>.</li>
+          <li>صوّر كذلك <b>10 كلاب غير مسجلة</b> — الصحيح أن يقول التطبيق «غير مسجل».</li>
+          <li>بعد كل نتيجة اضغط ✓ أو ✗ ليُحسب الاختبار.</li>
+          <li>للتجربة بهاتف آخر: من «الكلاب المسجلة» صدّر الملف واستورده في الهاتف الثاني.</li>
+        </ol>
+
+        <h3>3. نصائح التصوير</h3>
+        <ul class="tips">
+          <li><b>المسافة:</b> 15–20 سم تقريباً (أقرب من ذلك لا تستطيع الكاميرا التركيز)، ثم استخدم شريط <b>التكبير</b> حتى يملأ الأنف الدائرة.</li>
+          <li><b>الإضاءة:</b> ضوء نهار أو غرفة مضيئة، وتجنّب الشمس المباشرة على الأنف.</li>
+          <li><b>الثبات:</b> شخص يمسك الكلب بهدوء، وآخر يصوّر.</li>
+          <li><b>الأنف المبلل جداً:</b> امسحه بلطف بمنديل قبل التصوير لتقليل اللمعان.</li>
+          <li>انتظر حتى يصبح مؤشر الوضوح <span class="pill ok">واضح</span> ثم اضغط التصوير.</li>
+          <li>يُفضّل أن يكون عمر الكلب 6 أشهر فأكثر.</li>
+        </ul>
+
+        <h3>ما الذي يعتبر نجاحاً؟</h3>
+        <ul>
+          <li><b>صفر</b> أخطاء خطيرة (كلب يُعطى هوية كلب آخر).</li>
+          <li>تعرّف صحيح على معظم الكلاب المسجلة. وطلب «إعادة التصوير» أحياناً أمر طبيعي وليس خطأ.</li>
+        </ul>
+
+        <h3>تثبيت التطبيق على الهاتف</h3>
+        <ul>
+          <li><b>آيفون:</b> افتح الرابط في Safari ← زر المشاركة ← «إضافة إلى الشاشة الرئيسية».</li>
+          <li><b>أندرويد:</b> افتح الرابط في Chrome ← القائمة ⋮ ← «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».</li>
+        </ul>
+
+        <p class="note">ملاحظة: هذا نموذج تجريبي. البيانات محفوظة على هذا الهاتف فقط ولا تُرسل لأي خادم. المطابقة تعتمد على تحليل نسيج الأنف (نقاط مميزة + تحقق هندسي) وتعمل داخل الهاتف.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- Bottom navigation -->
+  <nav class="tabbar" id="tabbar">
+    <button data-go="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6 8 6v8H4z"/></svg><span>الرئيسية</span></button>
+    <button data-go="dogs"><svg viewBox="0 0 24 24"><circle cx="7" cy="9" r="2"/><circle cx="12" cy="6.5" r="2"/><circle cx="17" cy="9" r="2"/><path d="M8 17c0-2.5 1.8-4.5 4-4.5s4 2 4 4.5c0 1.4-1 2-2 2h-4c-1 0-2-.6-2-2z"/></svg><span>الكلاب</span></button>
+    <button data-go="identify" class="tab-cta"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>تعرّف</span></button>
+    <button data-go="results"><svg viewBox="0 0 24 24"><path d="M5 19V10M12 19V5M19 19v-6"/></svg><span>النتائج</span></button>
+    <button data-go="help"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8"/></svg><span>الطريقة</span></button>
+  </nav>
+
+  <!-- Camera overlay -->
+  <div class="camera" id="camera" hidden>
+    <video id="cam-video" playsinline muted autoplay></video>
+    <div class="cam-shade"><div class="cam-ring" id="cam-ring"><span class="cam-cross"></span></div></div>
+    <div class="cam-top">
+      <button class="cam-btn" id="cam-close" aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="cam-title" id="cam-title">ضع الأنف داخل الدائرة</div>
+      <button class="cam-btn" id="cam-torch" aria-label="الفلاش" hidden><svg viewBox="0 0 24 24"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg></button>
+    </div>
+    <div class="cam-meter">
+      <span class="pill" id="cam-quality">…</span>
+      <span class="cam-tip" id="cam-tip">على بعد 15–20 سم، استخدم التكبير حتى يملأ الأنف الدائرة</span>
+    </div>
+    <div class="cam-zoom" id="cam-zoom-wrap" hidden>
+      <span>تكبير</span><input type="range" id="cam-zoom" min="1" max="4" step="0.1" value="1">
+    </div>
+    <div class="cam-bottom">
+      <label class="cam-btn" for="cam-file" aria-label="من الصور"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20 16l-5-5-7 8"/></svg></label>
+      <input type="file" id="cam-file" accept="image/*" hidden>
+      <button class="shutter" id="cam-shoot" aria-label="تصوير"><span></span></button>
+      <button class="cam-btn" id="cam-switch" aria-label="تبديل الكاميرا"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><path d="M9.5 13a2.5 2.5 0 0 1 4.3-1.8M14.5 13a2.5 2.5 0 0 1-4.3 1.8"/></svg></button>
+    </div>
+    <!-- after capture: confirm -->
+    <div class="cam-confirm" id="cam-confirm" hidden>
+      <canvas id="cam-preview" width="512" height="512"></canvas>
+      <p id="cam-confirm-msg">هل الصورة واضحة ويظهر فيها نسيج الأنف؟</p>
+      <div class="row">
+        <button class="btn ghost light" id="cam-retake">إعادة</button>
+        <button class="btn primary" id="cam-use">استخدام الصورة</button>
+      </div>
+    </div>
+    <!-- manual crop for gallery photos -->
+    <div class="cropper" id="cropper" hidden>
+      <div class="crop-stage" id="crop-stage"><img id="crop-img" alt=""><div class="crop-ring"></div></div>
+      <p>حرّك الصورة وكبّرها حتى يملأ الأنف الدائرة</p>
+      <input type="range" id="crop-zoom" min="1" max="6" step="0.01" value="1">
+      <div class="row">
+        <button class="btn ghost light" id="crop-cancel">إلغاء</button>
+        <button class="btn primary" id="crop-done">تم</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="busy" id="busy" hidden><div class="spinner"></div><p id="busy-text">جاري التحليل…</p></div>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
