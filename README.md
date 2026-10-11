@@ -12,3 +12,5 @@ A mobile web app (PWA) to test whether a phone camera can identify individual do
 Matching: CLAHE-enhanced 512×512 nose crop → AKAZE keypoints → Hamming kNN + ratio test → RANSAC homography; the inlier count is the score (accept ≥ 18 and 1.6× the runner-up).
 
 This is a proof of concept, not a production biometric system.
+
+إعداد وتطوير: وسام نياز

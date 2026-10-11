@@ -230,6 +230,9 @@ main { max-width: 560px; margin: 0 auto; padding: 16px 16px calc(104px + var(--s
 .prose ol, .prose ul { padding-inline-start: 20px; margin: 0; display: grid; gap: 4px; }
 .prose .note { margin-top: 18px; font-size: 13.5px; color: var(--muted); background: var(--bg); border-radius: 12px; padding: 10px 12px; }
 
+.credit { text-align: center; margin: 18px 0 0; font-size: 13.5px; color: var(--muted); }
+.credit b { color: var(--brand); font-weight: 700; }
+
 /* ---------- tab bar ---------- */
 .tabbar { position: fixed; bottom: 0; inset-inline: 0; z-index: 30; display: grid; grid-template-columns: repeat(5, 1fr); background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 6px 6px calc(6px + var(--safe-b)); }
 .tabbar button { border: 0; background: none; display: grid; justify-items: center; gap: 1px; font-size: 11.5px; color: var(--muted); padding: 4px 0; min-height: 54px; }

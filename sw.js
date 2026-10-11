@@ -1,5 +1,5 @@
 /* Offline support: app shell is network-first (so updates arrive), the big engine file is cache-first. */
-const CACHE = 'egy-animal-id-v1';
+const CACHE = 'egy-animal-id-v2';
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'worker.js', 'nosematch.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
